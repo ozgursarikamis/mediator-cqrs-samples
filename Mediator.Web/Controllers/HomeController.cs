@@ -1,25 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using Mediator.Web.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mediator.Web.Models;
+using MediatR;
 
 namespace Mediator.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        public ILogger<HomeController> Logger { get; }
+        public IMediator Mediator { get; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator)
         {
-            _logger = logger;
+            Logger = logger;
+            Mediator = mediator;
         }
 
-        public IActionResult Index()
-        {
+        public async Task<IActionResult> Index()
+        { 
+            var addAddressCommand = new AddAddressCommand { City = "VAN", PostalCode = "65000", StreetAddress = "Metmanis", UserId = 1 };
+            await Mediator.Send(addAddressCommand);
             return View();
         }
 
