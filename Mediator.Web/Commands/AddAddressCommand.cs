@@ -9,18 +9,4 @@ namespace Mediator.Web.Commands
         public string PostalCode { get; set; }
         public string StreetAddress { get; set; }
     }
-
-    public class AddAddressResponse { }
-
-    public class AddressAddedNotification : INotification
-    {
-        public AddressAddedNotification()
-        {
-
-        }
-    }
-
-    #region Notification Handlers
-
-    #endregion
 }

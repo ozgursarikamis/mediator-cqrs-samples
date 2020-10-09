@@ -22,7 +22,8 @@ namespace Mediator.Web.Controllers
         public async Task<IActionResult> Index()
         { 
             var addAddressCommand = new AddAddressCommand { City = "VAN", PostalCode = "65000", StreetAddress = "Metmanis", UserId = 1 };
-            await Mediator.Send(addAddressCommand);
+            var response = await Mediator.Send(addAddressCommand);
+            Debug.WriteLine(response.Message);
             return View();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Mediator.Web.Commands;
+using Mediator.Web.Notifications;
 using MediatR;
 
 namespace Mediator.Web.Handlers
