@@ -4,6 +4,7 @@ using Mediator.Web.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mediator.Web.Models;
+using Mediator.Web.Services;
 using MediatR;
 
 namespace Mediator.Web.Controllers
@@ -12,18 +13,23 @@ namespace Mediator.Web.Controllers
     {
         public ILogger<HomeController> Logger { get; }
         public IMediator Mediator { get; }
+        public INotifierService NotifierService { get; }
 
-        public HomeController(ILogger<HomeController> logger, IMediator mediator)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator, INotifierService notifierService)
         {
             Logger = logger;
             Mediator = mediator;
+            NotifierService = notifierService;
         }
 
         public async Task<IActionResult> Index()
         { 
             var addAddressCommand = new AddAddressCommand { City = "VAN", PostalCode = "65000", StreetAddress = "Metmanis", UserId = 1 };
             var response = await Mediator.Send(addAddressCommand);
-            Debug.WriteLine(response.Message);
+            Logger.LogInformation(response.Message);
+
+            await NotifierService.Notify("This is a notification service message");
+
             return View();
         }
 
